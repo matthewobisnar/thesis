@@ -435,13 +435,16 @@ function generateTemplateEmployee($elem, $content)
     $($elem).empty();
 
     for (var el =0; el<$content.length; el++) {
-        
+        id="tfname_'+$content[el].emp_id+'"
         $html = [
            '<tr>',
                 '<th scope="row">'+$content[el].emp_id +'</th>',
-                '<td>'+$content[el].emp_first_name +" "+ $content[el].emp_last_name +'</td>',
-                '<td>'+$content[el].emp_email+'</td>',
-                '<td>'+ $content[el].emp_mobile_number +'</td>',
+                '<td>',
+                    '<span id="tfname_'+$content[el].emp_id+'">'+$content[el].emp_first_name +' </span>', 
+                    '<span id="tlname_'+$content[el].emp_id+'">'+ $content[el].emp_last_name +'</span>',
+                '</td>',
+                '<td id="temail_'+$content[el].emp_id+'">'+$content[el].emp_email+'</td>',
+                '<td id="tnumber_'+$content[el].emp_id+'">'+ $content[el].emp_mobile_number +'</td>',
                 '<td>'+ ($content[el].emp_status == 1 ? "Active" : "Inactive") +'</td>',
                 '<td>',
                     '<button class="btn btn-sm" id="editEmployee" data-info="'+$content[el].emp_id+'">',

@@ -41,7 +41,7 @@
                 title: 'Are you sure you want to delete these item(s) ('+selected.length+')?',
                 showCancelButton: true,
                 confirmButtonText: 'Delete',
-            }).then((result) => {
+            }).then(function (result){
                 if (result.isConfirmed) { 
                     deleteProject({
                         todo_id: selected
@@ -64,7 +64,7 @@
                 title: 'Are you sure you want to delete these item(s) ('+selected.length+')?',
                 showCancelButton: true,
                 confirmButtonText: 'Delete',
-            }).then((result) => {
+            }).then(function (result) {
                 if (result.isConfirmed) { 
                     deleteProject({
                         todo_id: selected
@@ -129,7 +129,7 @@
             function (response_data) {
                 if (response_data.status == true) {
                     Swal.fire('Todo is successfully added!', '', 'success')
-                    .then((result) => {
+                    .then(function (result) {
                         $('.modal').modal('hide');
                         loadTodoList();
                         $('#project-name').val("");
@@ -184,7 +184,7 @@
             function (response_data) {
                 if (response_data.status == true) {
                     Swal.fire('Project is successfully updated!', '', 'success')
-                    .then((result) => {
+                    .then(function (result) {
                         $('.modal').modal('hide');
                         loadTodoList();
                     });
@@ -210,7 +210,7 @@
             function (response_data) {
                 if (response_data.status == true) {
                     Swal.fire('Project is successfully deleted!', '', 'success')
-                    .then((result) => {
+                    .then(function (result) {
                         $('.modal').modal('hide');
                         loadTodoList();
                     });

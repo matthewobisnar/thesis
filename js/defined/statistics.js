@@ -148,7 +148,7 @@
             title: 'Are you sure you want to delete this item?',
             showCancelButton: true,
             confirmButtonText: 'Delete',
-        }).then((result) => {
+        }).then(function (result) {
             if (result.isConfirmed) { 
                 ajaxRequest(
                     {
@@ -203,7 +203,7 @@
                 if (response_data.status == true) {
                     /* Read more about isConfirmed, isDenied below */
                         Swal.fire($description + '!', '', 'success')
-                        .then((result) => {
+                        .then(function (result) {
                             loadDashboard();
                             requestApiList();
                             $('.modal').modal('hide');

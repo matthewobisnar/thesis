@@ -5,7 +5,10 @@
     });
 
     $(document).on('click', '#editEmployee', function(){
-        
+        $('#firstName').val("");
+        $('#lastName').val("");
+        $('#inputEmail').val("");
+        $('#mobileNumber').val("");
     });
 
     $(document).on('click','#resetEmployee',function (){
@@ -20,7 +23,7 @@
             title: 'Are you sure you want to delete employee with ID '+ $(e.currentTarget).attr("data-info") +'?',
             showCancelButton: true,
             confirmButtonText: 'Delete',
-        }).then((result) => {
+        }).then(function (result) {
             if (result.isConfirmed) { 
                 deleteEmployee({
                     emp_id: $(e.currentTarget).attr("data-info")
@@ -73,7 +76,7 @@
         function (response_data) {
             if (response_data.status == true) {
                 Swal.fire('Employee is successfully added!', '', 'success')
-                .then((result) => {
+                .then(function (result) {
                     loadEmployee();
                     $('#firstName').val("");
                     $('#lastName').val("");
@@ -99,7 +102,7 @@
         function (response_data) {
             if (response_data.status == true) {
                 Swal.fire('Employee is successfully deleted!', '', 'success')
-                .then((result) => {
+                .then(function (result) {
                     loadEmployee();
                 });
             } else {
@@ -108,9 +111,25 @@
         });
     }
 
-    function updateEmployee()
+    function updateEmployee(data)
     {
-
+        ajaxRequest(data,
+            {
+            url: update_employee_api,
+            type: "POST",
+            headers: assignAuthHeader(),
+            dataType: "json",
+        },
+        function (response_data) {
+            if (response_data.status == true) {
+                Swal.fire('Employee is successfully updated!', '', 'success')
+                .then(function (result) {
+                    loadEmployee();
+                });
+            } else {
+                Swal.fire('Something went wrong',response_data.error.error, 'error');
+            }
+        });
     }
 
     
