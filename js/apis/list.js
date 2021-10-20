@@ -6,7 +6,6 @@ var dashboard_detail = base1_url + '/api/v1/dashboard/dashboard-detail';
 var dashboad_customer_del_api = base1_url + '/api/v1/dashboard/delete-customer';
 var dashboad_customer_update_api = base1_url + '/api/v1/dashboard/update-customer';
 
-
 var get_todo_list = base1_url + "/api/v1/dashboard/get-todo-list";
 var create_todo_list = base1_url + '/api/v1/dashboard/create-todo';
 var get_todo_detail = base1_url + '/api/v1/dashboard/get-todo-detail';
@@ -23,3 +22,4 @@ var delete_sent_message = base1_url + '/api/v1/dashboard/delete-sent-messages';
 var get_sent_message_detail = base1_url + '/api/v1/dashboard/get-message-detail';
 var get_active_employee_list = base1_url + '/api/v1/dashboard/get-active-employee-list';
 
+var create_message_api = base1_url + '/api/v1/dashboard/create-message';

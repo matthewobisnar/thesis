@@ -4,8 +4,6 @@
         loadSentMessage();
 
         $('#view-message').on('show.bs.modal', function(e) { 
-
-            console.log($(e.relatedTarget).attr("data-info"));
             getSentMessageDetail({
                 sent_message_id: $(e.relatedTarget).attr("data-info")
             });
@@ -15,9 +13,37 @@
             $('.modal').modal('hide');
         });
 
+
+        $(document).on("click", "#createMessage", function(e) { 
+            
+            var $selected = [];
+
+            $('#employee-contacts input:checked').each(function() {
+                $selected.push($(this).val());
+            });
+
+            if ($selected.length == 0) {
+                Swal.fire('Something went wrong', 'Please Select atleast 1 number.', 'error');
+                return;
+            }
+
+            if ($("#messageArea").val() == '') {
+                Swal.fire('Something went wrong', '', 'error');
+                return;
+            }
+
+            $("#createMessage").prop("disabled", true);
+            createMessage({
+                message_content: $("#messageArea").val(),
+                message_numbers: $selected
+            });
+            $("#createMessage").prop("disabled", false);
+
+        });
+
     });
 
-    $(document).on("change","#selectallContact", function(e) { 
+    $(document).on("change", "#selectallContact", function(e) { 
         $('#employee-contacts input:checkbox').each(function() {
             $(this).prop('checked', e.currentTarget.checked);
         });
@@ -128,6 +154,24 @@
                 if (response_data.content.length > 0) {
                     generateTemplateMessageDetail("#view-message-detail-modal", response_data.content);
                 }
+            }
+        });
+    }
+
+
+    function createMessage(data)
+    {
+        ajaxRequest(data,
+            {
+                url: create_message_api,
+                type: "POST",
+                headers: assignAuthHeader(),
+                dataType: "json",
+            },
+        function (response_data) {
+            if (response_data.status == true) {
+                Swal.fire('Message is successfully sent!', '', 'success');
+                loadSentMessage();
             }
         });
     }

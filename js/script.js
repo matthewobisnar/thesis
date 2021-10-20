@@ -1,8 +1,6 @@
 
 
 $(document).on("click", '#logout', function() {
-
-    console.log("sdfsd");
     unsetLocalStorage(["user_id", "token"], function() {
         window.location.replace("/");
     });
@@ -172,32 +170,63 @@ function copyDataApprovedRequest()
     'Mobile Number: ' + $("#request_modal-1 #mobileNumber").html() + '\r\n' +
     'Date Created: '+ $("#request_modal-1 #dateCreated").html() + '\r\n' +
     "Request Details" + $("#request_modal-1 #requestDetails").html();
-    console.log(text)
-   /* const writeBtn = document.getElementById('write-btn');
-    <!-- <div>
-    <input type="text" class="to-copy" placeholder="Type something..." aria-label="Type something">
-    <button id="write-btn">Copy to clipboard</button>
-</div>
 
-    writeBtn.addEventListener('click', () => {
-        const inputValue = inputEl.value.trim();
-        if (inputValue) {
-          navigator.clipboard.writeText(inputValue)
-            .then(() => {
-              inputEl.value = '';
-              if (writeBtn.innerText !== 'Copied!') {
-                const originalText = writeBtn.innerText;
-                writeBtn.innerText = 'Copied!';
-                setTimeout(() => {
-                  writeBtn.innerText = originalText;
-                }, 1500);
-              }
-            })
-            .catch(err => {
-              console.log('Something went wrong', err);
-            })
-        }
-      });*/
+    navigator.clipboard.writeText(text)
+    .then(() => {
+        // Success!
+        console.log("success");
+    })
+    .catch(err => {
+        console.log('Something went wrong', err);
+    });
+
+//     const writeBtn = document.getElementById('write-btn');
+//     <!-- <div>
+//     <input type="text" class="to-copy" placeholder="Type something..." aria-label="Type something">
+//     <button id="write-btn">Copy to clipboard</button>
+// </div>
+
+//     writeBtn.addEventListener('click', () => {
+//         const inputValue = inputEl.value.trim();
+//         if (inputValue) {
+//           navigator.clipboard.writeText(inputValue)
+//             .then(() => {
+//               inputEl.value = '';
+//               if (writeBtn.innerText !== 'Copied!') {
+//                 const originalText = writeBtn.innerText;
+//                 writeBtn.innerText = 'Copied!';
+//                 setTimeout(() => {
+//                   writeBtn.innerText = originalText;
+//                 }, 1500);
+//               }
+//             })
+//             .catch(err => {
+//               console.log('Something went wrong', err);
+//             })
+//         }
+//       });
+
+        // console.log(text);
+        // if (typeof (navigator.clipboard) == 'undefined') {
+        //     console.log('navigator.clipboard');
+        //     var textArea = document.createElement("textarea");
+        //     textArea.value = text;
+        //     textArea.style.position = "fixed";  //avoid scrolling to bottom
+        //     document.body.appendChild(textArea);
+        //     textArea.focus();
+        //     textArea.select();
+        
+        //     try {
+        //         var successful = document.execCommand('copy');
+        //         var msg = successful ? 'successful' : 'unsuccessful';
+        //         console.log(msg);
+        //     } catch (err) {
+        //         console.log('Was not possible to copy te text: ', err);
+        //     }
+        
+        //     document.body.removeChild(textArea)
+        //     return;
+        // }
 }
 
 function generateTodoTemplate($elem, $content, num)
@@ -414,8 +443,11 @@ function generateTemplateEmployee($elem, $content)
                 '<td>'+$content[el].emp_email+'</td>',
                 '<td>'+ $content[el].emp_mobile_number +'</td>',
                 '<td>'+ ($content[el].emp_status == 1 ? "Active" : "Inactive") +'</td>',
-                '<td>'+time_ago(new Date($content[el].emp_created_at))+'</td>',
-                '<td><button class="btn btn-sm" id="deleteEmployee" data-info="'+$content[el].emp_id+'"><span class="material-icons text-muted material-icons-outlined fs-3">delete</span></button></td>',
+                '<td>',
+                    '<button class="btn btn-sm" id="editEmployee" data-info="'+$content[el].emp_id+'">',
+                        '<span class="material-icons text-muted material-icons-outlined fs-3">edit</span>',,
+                    '</button>',
+                '</td>',
             '</tr>'
         ];
 
@@ -427,7 +459,7 @@ function generateTemplateEmployee($elem, $content)
 
 function generateTemplateSentMessage($elem, $content)
 {
-    $($elem).empty();
+    $("#sent-messages").empty();
 
     for (var el =0; el<$content.length; el++) {
 
@@ -438,7 +470,7 @@ function generateTemplateSentMessage($elem, $content)
                     '<span class="pt-1 form-checked-content">',
                         '<strong><a href="" class="text-decoration-none text-dark" data-bs-toggle="modal" data-info="'+$content[el].sent_message_id+'" data-bs-target="#view-message">'+ $content[el].emp_first_name + " " + $content[el].emp_last_name +' <small class="opacity-50 text-secondary">'+time_ago(new Date($content[el].sent_created_at))+'</small></a></strong>',
                         '<small class="d-block text-muted mt-1">',
-                            $content[el].sent_message_message,
+                            $content[el].message_content,
                         '</small>',
                     '</span>',
                 '</div>', 
@@ -448,7 +480,7 @@ function generateTemplateSentMessage($elem, $content)
             '</label>'
         ];
 
-        $($elem).append($html.join(""));
+        $("#sent-messages").append($html.join(""));
     }
 }
 
@@ -480,7 +512,7 @@ function generateTemplateMessageDetail($elem, $content)
             '<hr/>',
             '<h6>Message:</h6>',
             '<textarea class="form-control bg-white opacity-75 textarea" id="td_description" aria-describedby="help" disabled>',
-                'Sample',
+                $content[el].message_content,
             '</textarea>'
         ];
 

@@ -4,6 +4,9 @@
         loadEmployee();
     });
 
+    $(document).on('click', '#editEmployee', function(){
+        
+    });
 
     $(document).on('click','#resetEmployee',function (){
         $('#firstName').val("");
@@ -103,6 +106,11 @@
                 Swal.fire('Something went wrong',response_data.error.error, 'error');
             }
         });
+    }
+
+    function updateEmployee()
+    {
+
     }
 
     

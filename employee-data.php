@@ -23,7 +23,7 @@
             <div class="container-lg">
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="card shadow">
+                        <div class="card">
                             <table class="table">
                                 <thead>
                                   <tr>
@@ -32,12 +32,11 @@
                                     <th scope="col">Email</th>
                                     <th scope="col">Mobile</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Date joined</th>
-                                    <th scope="col">Remove</th>
+                                    <th scope="col">Actions</th>
                                   </tr>
                                 </thead>
                                 <tbody id="employee-list-data"></tbody>
-                              </table>
+                            </table>
                         </div>
                     </div>
                     <div class="col-md">
