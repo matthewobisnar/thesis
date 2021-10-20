@@ -15,7 +15,7 @@ var delete_todo_by_id = base1_url + '/api/v1/dashboard/delete-todo';
 var get_employee_list = base1_url + '/api/v1/dashboard/get-employee-list';
 var create_employee_api = base1_url + '/api/v1/dashboard/create-employee';
 var delete_employee_api = base1_url + '/api/v1/dashboard/delete-employee';
-var update_message_api = base1_url + '/api/v1/dashboard/update-employee';
+var update_employee_api = base1_url + '/api/v1/dashboard/update-employee';
 
 var get_contacts_api = base1_url + '/api/v1/dashboard/delete-employee';
 var get_sent_message = base1_url + '/api/v1/dashboard/get-message';

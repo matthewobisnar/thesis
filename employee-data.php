@@ -46,6 +46,7 @@
                             </div>
                             <div class="card-body">
                                   <div class="mb-3">
+                                      <input type="hidden" class="form-control form-control-lg" id="emp_id">
                                       <label for="firstName" class="form-label">First Name: *</label>
                                       <input type="text" class="form-control form-control-lg" id="firstName">
                                   </div>

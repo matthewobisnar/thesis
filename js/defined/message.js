@@ -13,35 +13,6 @@
             $('.modal').modal('hide');
         });
 
-        $(document).on('click', '#editEmployee', function(e) {
-            var data = $(this).attr('data-info');
-        
-            $("#firstName").val($('#tfname_'+ data).html());
-            $("#lastName").val($('#tlname_' + data).html());
-            $("#mobileNumber").val($('#tnumber_'+ data).html());
-            $("#inputEmail").val($('#temail_'+ data).html());
-
-            var payload = {
-                emp_id: data,
-                fname: $("#firstName").val($('#tfname_'+ data).html()),
-                lanme: $("#lastName").val($('#tlname_' + data).html()),
-                mobile: $("#mobileNumber").val($('#tnumber_'+ data).html()),
-                email: $("#inputEmail").val($('#temail_'+ data).html())
-            };
-
-            Swal.fire({
-                title: 'Are you sure you want to update this employee?',
-                showCancelButton: true,
-                confirmButtonText: 'Update',
-            }).then(function (result) {
-                if (result.isConfirmed) {  
-                    updateEmployee(payload);        
-                }
-            });
-            
-
-        });
-
         $(document).on("click", "#createMessage", function(e) { 
             
             var $selected = [];
@@ -203,20 +174,4 @@
         });
     }
 
-    function updateEmployee (data)
-    {
-        ajaxRequest(data,
-            {
-                url: update_message_api,
-                type: "POST",
-                headers: assignAuthHeader(),
-                dataType: "json",
-            },
-        function (response_data) {
-            if (response_data.status == true) {
-                Swal.fire('Employee is successfully updated!', '', 'success');
-                loadEmployee();
-            }
-        });
-    }
 })()

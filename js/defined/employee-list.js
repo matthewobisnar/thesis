@@ -4,11 +4,17 @@
         loadEmployee();
     });
 
-    $(document).on('click', '#editEmployee', function(){
-        $('#firstName').val("");
-        $('#lastName').val("");
-        $('#inputEmail').val("");
-        $('#mobileNumber').val("");
+    $(document).on('click', '#editEmployee', function(e) {
+        var data = $(this).attr('data-info');
+    
+        $("#emp_id").val(data);
+        $("#firstName").val($('#tfname_'+ data).html());
+        $("#lastName").val($('#tlname_' + data).html());
+        $("#mobileNumber").val($('#tnumber_'+ data).html());
+        $("#inputEmail").val($('#temail_'+ data).html());
+
+        $('#AddEmployee').html('Update');
+        
     });
 
     $(document).on('click','#resetEmployee',function (){
@@ -16,9 +22,11 @@
         $('#lastName').val("");
         $('#inputEmail').val("");
         $('#mobileNumber').val("");
+        $("#emp_id").val(""); 
+        $('#AddEmployee').html('Submit');
     });
 
-    $(document).on('click','#deleteEmployee',function (e){
+    $(document).on('click','#deleteEmployee',function (e) {
         Swal.fire({
             title: 'Are you sure you want to delete employee with ID '+ $(e.currentTarget).attr("data-info") +'?',
             showCancelButton: true,
@@ -34,14 +42,40 @@
 
     $(document).on('click','#AddEmployee',function() {
         
-        var data = {
-            fname : $('#firstName').val(),
-            lname : $('#lastName').val(),
-            email : $('#inputEmail').val(),
-            mobile : $('#mobileNumber').val()
-        };
 
-        addEmployee(data);
+        if ($("#emp_id").val() != '') {
+
+            var data = $("#emp_id").val();
+
+            var payload = {
+                emp_id: data,
+                fname: $("#firstName").val(),
+                lname: $("#lastName").val(),
+                mobile: $("#mobileNumber").val(),
+                email: $("#inputEmail").val()
+            };
+
+            Swal.fire({
+                title: 'Are you sure you want to update this employee?',
+                showCancelButton: true,
+                confirmButtonText: 'Update',
+            }).then(function (result) {
+                if (result.isConfirmed) {  
+                    updateEmployee(payload);        
+                }
+            });
+
+        } else {
+
+            var data = {
+                fname : $('#firstName').val(),
+                lname : $('#lastName').val(),
+                email : $('#inputEmail').val(),
+                mobile : $('#mobileNumber').val()
+            };
+
+            addEmployee(data);   
+        }
     });
 
     function loadEmployee()
@@ -82,6 +116,7 @@
                     $('#lastName').val("");
                     $('#inputEmail').val("");
                     $('#mobileNumber').val("");
+                    $("#emp_id").val(""); 
                 });
             } else {
                 Swal.fire('Something went wrong', response_data.error.error, 'error');
@@ -97,7 +132,7 @@
             url: delete_employee_api,
             type: "POST",
             headers: assignAuthHeader(),
-            dataType: "json",
+            dataType: "json"
         },
         function (response_data) {
             if (response_data.status == true) {
@@ -111,21 +146,25 @@
         });
     }
 
-    function updateEmployee(data)
+    function updateEmployee (data)
     {
         ajaxRequest(data,
             {
-            url: update_employee_api,
-            type: "POST",
-            headers: assignAuthHeader(),
-            dataType: "json",
-        },
+                url: update_employee_api,
+                type: "POST",
+                headers: assignAuthHeader(),
+                dataType: "json"
+            },
         function (response_data) {
             if (response_data.status == true) {
-                Swal.fire('Employee is successfully updated!', '', 'success')
-                .then(function (result) {
-                    loadEmployee();
-                });
+                Swal.fire('Employee is successfully updated!', '', 'success');
+                loadEmployee();
+                $('#AddEmployee').html('Submit');
+                $('#firstName').val("");
+                $('#lastName').val("");
+                $('#inputEmail').val("");
+                $('#mobileNumber').val("");
+                $("#emp_id").val(""); 
             } else {
                 Swal.fire('Something went wrong',response_data.error.error, 'error');
             }
